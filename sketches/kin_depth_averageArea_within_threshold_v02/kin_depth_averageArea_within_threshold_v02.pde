@@ -26,7 +26,7 @@ Kinect kinect;
 float MIN_THRESH = 364;
 float MAX_THRESH = 904;
 PImage CALIBRATION_img;
-PImage FS_img;  // fullscreen image
+PImage FULL_img;  // fullscreen image
 PImage dImg;
 
 boolean SHOW_CALIBRATION = true;
@@ -40,27 +40,32 @@ int SCREEN_NUM = 2;
 
 //////////////////////////////////////////////////////////
 void setup() {
-  size(1024, 768, P3D);
+  fullScreen(P2D, SCREEN_NUM);
+  //size(1024, 768, P2D);
   //fullScreen(P3D, SCREEN_NUM);
   //size(1024, 768, P3D);
   //fullScreen(SCREEN_NUM);
   //size(640, 480);
-  //noStroke();
+  noStroke();
   kinect = new Kinect(this);
   kinect.initDepth();
   kinect.enableMirror(true);
   
   CALIBRATION_img = createImage(kinect.width, kinect.height, RGB);
-  FS_img     = createImage(width, height, RGB);
+  FULL_img = createImage(kinect.width, kinect.height, RGB);
+  //FULL_img     = createImage(width, height, RGB);
   
   // factor by which to upscale Kinect dimensions 
   FS_SCALE_X = width/kinect.width;
   FS_SCALE_Y = height/kinect.height;
+  //FS_SCALE_X = 1024.0/kinect.width;
+  //FS_SCALE_Y = 768.0/kinect.height;
   
   println("press 'c' to toggle calibration view");
   
   //DEBUG
-  //println(FS_SCALE_X);
+  println("FS_SCALE_X = " + FS_SCALE_X);
+  println(FS_SCALE_Y);
   println("kinect.width = " + kinect.width);
   println("kinect.height = " + kinect.height);
 }

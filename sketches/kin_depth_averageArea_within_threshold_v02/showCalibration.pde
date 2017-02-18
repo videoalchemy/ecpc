@@ -1,4 +1,3 @@
-
 void showCalibration() {
 
   CALIBRATION_img.loadPixels();
