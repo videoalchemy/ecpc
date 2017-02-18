@@ -1,23 +1,33 @@
-/* dev_snowflake
-    turns users into snowflakes using depth info
-    tracks closest point with snowflake
-    [ ] full screen
-    [ ] adjust threshold for dev area
-    [ ] add easing
-    [ ] turn on mirror
-    [ ] add controller for min max threshold
+/* jstephens 2017_02
+    ecpc installation
+    experiment sketch
+NOTES:
+  * Kinect 1414 
+    - raw depth values 0-2048
+    - depthImage: 640x480
+TODO:
+  [ ] remove P3D and revert to assigning pixel color
+  [ ] use void depthEvent(Kinect k) {}
+      // ask for depthImage only when it's available
+  [ ] divide threshold depth into front-half and back-half
+      // bc soon a spandex screen will register impressions v depressions
+  [ ] use two colors to distinguish pixels as front-half or back-half
+  [ ] use img.loadPixels and img.updatePixels
+  [ ] add mouse controls for simple calibration
+  
 */
     
-import org.openkinect.tests.*;
-import org.openkinect.freenect.*;
-import org.openkinect.processing.*; //<>//
+//import org.openkinect.tests.*;
+//import org.openkinect.freenect.*;
+import org.openkinect.processing.*;
 
 Kinect kinect;
 
 float MIN_THRESH = 480;
 float MAX_THRESH = 930;
-PImage KINECT_img;
+PImage CALIBRATION_img;
 PImage FS_img;  // fullscreen image
+PImage dImg;
 
 boolean SHOW_CALIBRATION = true;
 
@@ -40,7 +50,7 @@ void setup() {
   kinect.initDepth();
   kinect.enableMirror(true);
   
-  KINECT_img = createImage(kinect.width, kinect.height, RGB);
+  CALIBRATION_img = createImage(kinect.width, kinect.height, RGB);
   FS_img     = createImage(width, height, RGB);
   
   // factor by which to upscale Kinect dimensions 
@@ -48,14 +58,17 @@ void setup() {
   FS_SCALE_Y = height/kinect.height;
   
   println("press 'c' to toggle calibration view");
+  
+  //DEBUG
+  //println(FS_SCALE_X);
+  println("kinect.width = " + kinect.width);
+  println("kinect.height = " + kinect.height);
 }
 
 
 //////////////////////////////////////////////////////////
 void draw() {
   background(100);
-
-  //println(FS_SCALE_X);
 
   if (SHOW_CALIBRATION) {
     showCalibration();

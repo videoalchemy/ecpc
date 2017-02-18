@@ -2,7 +2,8 @@ void showFullScreen() {
 
   // KINECT_img.loadPixels();
 
-  PImage dImg = kinect.getDepthImage();
+  dImg = kinect.getDepthImage();
+  //PImage dImg = kinect.getDepthImage();
   //image(dImg, 0, 0);
 
   // Get the raw depth as array of integers
@@ -27,7 +28,7 @@ void showFullScreen() {
       // extract raw depth value from the raw depth array
       int depthValue = depth[depthIndex];
 
-      // test raw depth against threshold 
+      // test pixel against depth threshold 
       //   keep pixel if its depth falls between min and max
       //   otherwise, color black
       if (depthValue > MIN_THRESH && depthValue < MAX_THRESH) {   // subtracts a specific area for detection && x > 100 && y > 50) {
@@ -35,7 +36,6 @@ void showFullScreen() {
         // if the raw depth value passes the conditions 
         //    resort to low res depth image pixel at index
         //    extract brightness
-        //    map brightness to z-index
         //    set fill as function of b
 
         float b = brightness(dImg.pixels[depthIndex]);
