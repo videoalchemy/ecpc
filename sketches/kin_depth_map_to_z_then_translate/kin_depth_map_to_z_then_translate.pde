@@ -30,7 +30,8 @@ int SCREEN_NUM = 2;
 
 //////////////////////////////////////////////////////////
 void setup() {
-  fullScreen(SCREEN_NUM);
+  size(1024, 768, P3D);
+  //fullScreen(SCREEN_NUM);
   //size(640, 480);
   //noStroke();
   kinect = new Kinect(this);
